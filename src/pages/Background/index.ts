@@ -33,3 +33,21 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
       break;
   }
 });
+
+// PoC of Right menu context
+const searchWiki = (query) => {
+  console.log("llego");
+  query = query.selectionText;
+  console.log(query);
+  chrome.tabs.create({ url: "https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+%22" + query + "%22&queryString=" + query });
+}
+
+chrome.contextMenus.create({
+  id: "1",
+  title: "Search in Dynatrace Wiki",
+  contexts: ["selection"]
+});
+
+chrome.contextMenus.onClicked.addListener((info) => {
+  searchWiki(info);
+});
