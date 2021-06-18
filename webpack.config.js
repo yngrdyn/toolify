@@ -41,6 +41,7 @@ var options = {
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.ts'),
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.jsx'),
+    manel: path.join(__dirname, 'src', 'pages', 'Manel', 'index.jsx'),
   },
   toolify: {
     notHotReload: ['contentScript', 'devtools'],
@@ -176,6 +177,12 @@ var options = {
       template: path.join(__dirname, 'src', 'pages', 'Panel', 'index.html'),
       filename: 'panel.html',
       chunks: ['panel'],
+      cache: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src', 'pages', 'Manel', 'index.html'),
+      filename: 'manel.html',
+      chunks: ['manel'],
       cache: false,
     }),
   ],
