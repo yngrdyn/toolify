@@ -1,4 +1,4 @@
-@import "~antd/dist/antd.css";
+@import '~antd/dist/antd.css';
 
 .App {
   position: absolute;
@@ -37,15 +37,12 @@
 }
 
 .action {
+  width: 100%;
   margin-bottom: 10px;
   display: flex;
   align-content: center;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-}
-
-.action span {
-  margin-left: 10px;
 }
 
 #app-container {
@@ -99,4 +96,8 @@ h4 {
 
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
   color: white;
+}
+
+.action > div > span {
+  margin-left: 10px;
 }
