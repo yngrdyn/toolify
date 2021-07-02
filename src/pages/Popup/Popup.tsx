@@ -2,7 +2,9 @@ import React from 'react';
 import logo from '../../assets/img/logo.svg';
 import './Popup.css';
 import { ActionType, MessageType, Tool, ToolTypes } from '../../core/types';
-import { Button, Switch } from 'antd';
+import { Button, Collapse, Switch } from 'antd';
+import { Add } from '../Add/Add';
+const { Panel } = Collapse;
 
 const Popup: React.FC<{}> = () => {
 
@@ -52,17 +54,23 @@ const Popup: React.FC<{}> = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Button className="add-button" onClick={onAddTool}>
-          Add tool
-        </Button>
-        <h2 className="title">Current Tools</h2>
-        <div className="action-list">
-          {
-            tools.map(
-              tool => <Tool data={tool}></Tool>
-            )
-          }
-        </div>
+        <Collapse defaultActiveKey={['tools']}>
+          <Panel header="Current Tools" key="tools">
+            <div className="action-list">
+              {
+                tools.map(
+                  tool => <Tool data={tool}></Tool>
+                )
+              }
+              {tools.length == 0 &&
+                <p>There's no tools! Start by creating a new one</p>
+              }
+            </div>
+          </Panel>
+          <Panel header="Add new tool" key="add">
+            <Add />
+          </Panel>
+        </Collapse>
       </header>
     </div>
   );

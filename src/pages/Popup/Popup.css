@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 .App {
   position: absolute;
@@ -24,7 +24,6 @@
 }
 
 .App-header {
-  height: 100%;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -50,10 +49,13 @@
 }
 
 #app-container {
-  width: 300px;
+  width: 100px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: white;
 }
 
@@ -78,4 +80,23 @@ h1, h2, h3, h4 {
   to {
     transform: rotate(360deg);
   }
+}
+
+.ant-collapse {
+  background-color: transparent;
+  border: none;
+}
+
+.ant-collapse > .ant-collapse-item {
+  border: none;
+}
+
+.ant-collapse-content {
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  border: none;
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+  color: white;
 }

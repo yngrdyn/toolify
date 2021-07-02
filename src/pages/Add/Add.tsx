@@ -5,7 +5,7 @@ import { Button, Form, Input, Select, Switch } from 'antd';
 import { valueType } from 'antd/lib/statistic/utils';
 import { SelectValue } from 'antd/lib/select';
 
-const Add: React.FC<{}> = () => {
+export const Add: React.FC<{}> = () => {
 
   var state = {
     name: "",
@@ -30,15 +30,11 @@ const Add: React.FC<{}> = () => {
     chrome.windows.getLastFocused(window => {
       window.focused = true;
     });
-
-
   };
 
   return (
-    <div className="App">
+    <div className="App-add">
       <header className="App-header">
-        <h2 className="title">Add new tool</h2>
-
         <Form
           name="basic"
           labelCol={{ span: 8 }}
