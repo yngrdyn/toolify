@@ -1,7 +1,7 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
-.App {
-  position: absolute;
+.App-add {
+  position: relative;
   top: 0px;
   bottom: 0px;
   left: 0px;
@@ -55,12 +55,15 @@
   margin-left: 10px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: white;
 }
 
 .add-button {
-  position: absolute;
+  position: relative;
   bottom: 5%;
   right: 0;
   left: 0;
