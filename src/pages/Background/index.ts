@@ -35,10 +35,8 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
 });
 
 // PoC of Right menu context
-const searchWiki = (query) => {
-  console.log("llego");
+const searchWiki = (query: any) => {
   query = query.selectionText;
-  console.log(query);
   chrome.tabs.create({ url: "https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+%22" + query + "%22&queryString=" + query });
 }
 

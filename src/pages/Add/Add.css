@@ -8,6 +8,7 @@
   right: 0px;
   text-align: center;
   height: 100%;
+  width: 100%;
   padding: 10px;
   background-color: #282c34;
 }
@@ -21,6 +22,11 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.ant-form-item-label > label {
+  color: white;
+  font-size: 16px;
 }
 
 .App-header {
@@ -45,12 +51,24 @@
   align-items: center;
 }
 
-#app-container {
-  width: 300px;
+.action span {
+  margin-left: 10px;
 }
 
-h2 {
+h1, h2, h3, h4 {
   color: white;
+}
+
+.add-button {
+  position: absolute;
+  bottom: 5%;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+
+.title {
+  margin-top: 5%;
 }
 
 .App-link {

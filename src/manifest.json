@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Toolify",
-  "options_page": "options.html",
+  "options_page": "",
   "background": {
     "service_worker": "background.bundle.js"
   },
   "action": {
-    "default_popup": "manel.html",
+    "default_popup": "popup.html",
     "default_icon": "icon-34.png"
   },
   "icons": {

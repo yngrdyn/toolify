@@ -21,6 +21,13 @@ export enum ActionType {
   CLEAR = 'CLEAR',
 }
 
+export enum ToolTypes {
+  PASTE = "PASTE",
+}
+
 export interface Tool {
   name: string;
+  value: string;
+  type: ToolTypes;
+  enabled: boolean;
 }
