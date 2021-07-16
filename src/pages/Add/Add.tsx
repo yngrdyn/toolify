@@ -6,28 +6,36 @@ import { valueType } from 'antd/lib/statistic/utils';
 import { SelectValue } from 'antd/lib/select';
 
 export const Add: React.FC<{}> = () => {
-
   var state = {
-    name: "",
-    type: "",
-    value: ""
-  }
+    name: '',
+    type: '',
+    value: '',
+  };
 
-  const onNameChange = (e: { target: { value: string; }; }) => {
+  const onNameChange = (e: { target: { value: string } }) => {
     state.name = e.target.value;
-  }
+  };
 
   const onTypeChange = (value: SelectValue, option: any) => {
-    state.type = value?.toString() ?? "";
-  }
+    state.type = value?.toString() ?? '';
+  };
 
-  const onValueChange = (e: { target: { value: string; }; }) => {
+  const onValueChange = (e: { target: { value: string } }) => {
     state.value = e.target.value;
-  }
+  };
 
   const onAddTool = () => {
-    chrome.runtime.sendMessage({ type: ActionType.ADD_TOOL, tool: { name: state.name, enabled: true, value: state.value, type: state.type as valueType } });
-    chrome.windows.getLastFocused(window => {
+    chrome.runtime.sendMessage({
+      type: ActionType.ADD_TOOL,
+      tool: {
+        id: Math.floor(Math.random() * 100),
+        name: state.name,
+        enabled: true,
+        value: state.value,
+        type: state.type as valueType,
+      },
+    });
+    chrome.windows.getLastFocused((window) => {
       window.focused = true;
     });
   };
@@ -35,15 +43,13 @@ export const Add: React.FC<{}> = () => {
   return (
     <div className="App-add">
       <header className="App-header">
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-        >
+        <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
           <Form.Item
             label="Tool label"
             name="name"
-            rules={[{ required: true, message: 'Please input the tool label!' }]}
+            rules={[
+              { required: true, message: 'Please input the tool label!' },
+            ]}
           >
             <Input onChange={onNameChange} />
           </Form.Item>
@@ -67,10 +73,9 @@ export const Add: React.FC<{}> = () => {
           </Form.Item>
         </Form>
 
-        <Button
-          className="add-button"
-          onClick={onAddTool}
-        >Add tool</Button>
+        <Button className="add-button" onClick={onAddTool}>
+          Add tool
+        </Button>
       </header>
     </div>
   );

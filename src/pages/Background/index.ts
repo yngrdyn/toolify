@@ -26,6 +26,20 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
       const newTools = [...tools, message.tool];
       setTools(newTools);
       break;
+    case ActionType.DELETE_TOOL:
+      setTools(tools.filter((tool) => tool.id !== message.id));
+      break;
+    case ActionType.CHANGE_STATUS:
+      const newChangedTools = tools.map((tool) =>
+        tool.id === message.id
+          ? {
+              ...tool,
+              enabled: message.enabled,
+            }
+          : tool,
+      );
+      setTools(newChangedTools);
+      break;
     case ActionType.CLEAR:
       setTools([]);
       break;
@@ -37,13 +51,19 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
 // PoC of Right menu context
 const searchWiki = (query: any) => {
   query = query.selectionText;
-  chrome.tabs.create({ url: "https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+%22" + query + "%22&queryString=" + query });
-}
+  chrome.tabs.create({
+    url:
+      'https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+%22' +
+      query +
+      '%22&queryString=' +
+      query,
+  });
+};
 
 chrome.contextMenus.create({
-  id: "1",
-  title: "Search in Dynatrace Wiki",
-  contexts: ["selection"]
+  id: '1',
+  title: 'Search in Dynatrace Wiki',
+  contexts: ['selection'],
 });
 
 chrome.contextMenus.onClicked.addListener((info) => {
