@@ -1,9 +1,10 @@
-import React from 'react';
-import './Add.css';
-import { ActionType, MessageType, Tool, ToolTypes } from '../../core/types';
-import { Button, Form, Input, Select, Switch } from 'antd';
-import { valueType } from 'antd/lib/statistic/utils';
+import { Button, Form, Input, Select } from 'antd';
 import { SelectValue } from 'antd/lib/select';
+import { valueType } from 'antd/lib/statistic/utils';
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ActionType } from '../../core/types';
+import './Add.css';
 
 export const Add: React.FC<{}> = () => {
   var state = {
@@ -28,7 +29,7 @@ export const Add: React.FC<{}> = () => {
     chrome.runtime.sendMessage({
       type: ActionType.ADD_TOOL,
       tool: {
-        id: Math.floor(Math.random() * 100),
+        id: uuidv4(),
         name: state.name,
         enabled: true,
         value: state.value,
