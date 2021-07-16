@@ -40,6 +40,8 @@
   "permissions": [
     "storage",
     "contextMenus",
-    "tabs"
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
   ]
 }
