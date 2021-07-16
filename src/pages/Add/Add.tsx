@@ -1,58 +1,91 @@
-import { Button, Form, Input, Select } from 'antd';
-import { SelectValue } from 'antd/lib/select';
-import { valueType } from 'antd/lib/statistic/utils';
 import React from 'react';
+
+import { Button, Form, Input, Select } from 'antd';
+import { valueType } from 'antd/lib/statistic/utils';
 import { v4 as uuidv4 } from 'uuid';
-import { ActionType } from '../../core/types';
+import { ActionType, Tool } from '../../core/types';
 import './Add.css';
 
-export const Add: React.FC<{}> = () => {
-  var state = {
-    name: '',
-    type: '',
-    value: '',
-  };
+// TODO: Below commented casting does not let pass properties
+export const Add /*: React.FC<{}> */ = (props: any) => {
+  const [form] = Form.useForm();
 
-  const onNameChange = (e: { target: { value: string } }) => {
-    state.name = e.target.value;
-  };
-
-  const onTypeChange = (value: SelectValue, option: any) => {
-    state.type = value?.toString() ?? '';
-  };
-
-  const onValueChange = (e: { target: { value: string } }) => {
-    state.value = e.target.value;
-  };
-
-  const onAddTool = () => {
-    chrome.runtime.sendMessage({
-      type: ActionType.ADD_TOOL,
-      tool: {
-        id: uuidv4(),
-        name: state.name,
-        enabled: true,
-        value: state.value,
-        type: state.type as valueType,
-      },
+  const initializeForm = () => {
+    form.setFieldsValue({
+      name: '',
+      type: 'PASTE',
+      value: '',
     });
-    chrome.windows.getLastFocused((window) => {
-      window.focused = true;
-    });
+  };
+
+  console.log('add tools -> ', props.tools);
+
+  initializeForm();
+
+  const isThereAnyToolWithSameName = (name: string) => {
+    return props.tools.some(
+      (tool: Tool) =>
+        tool.name.trim().toLocaleLowerCase() == name.trim().toLocaleLowerCase(),
+    );
+  };
+
+  const isNewToolValid = (formValues: any) => {
+    return (
+      formValues.name.trim().length > 0 &&
+      formValues.type.trim().length > 0 &&
+      !isThereAnyToolWithSameName(formValues.name)
+    );
+  };
+
+  const onAddTool = (formValues: any) => {
+    if (isNewToolValid(formValues)) {
+      chrome.runtime.sendMessage({
+        type: ActionType.ADD_TOOL,
+        tool: {
+          id: uuidv4(),
+          name: formValues.name,
+          type: formValues.type as valueType,
+          value: formValues.value,
+          enabled: true,
+        },
+      });
+      chrome.windows.getLastFocused((window) => {
+        window.focused = true;
+      });
+
+      initializeForm();
+    }
+  };
+
+  const validateName = (
+    rule: any,
+    value: string,
+    cb: (msg?: string) => void,
+  ) => {
+    isThereAnyToolWithSameName(value)
+      ? cb('There is already configured a tool with this name!')
+      : cb();
   };
 
   return (
     <div className="App-add">
       <header className="App-header">
-        <Form name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+        <Form
+          name="basic"
+          form={form}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          onFinish={onAddTool}
+        >
           <Form.Item
             label="Tool label"
             name="name"
             rules={[
               { required: true, message: 'Please input the tool label!' },
+              { validator: validateName },
             ]}
           >
-            <Input onChange={onNameChange} />
+            <Input />
           </Form.Item>
 
           <Form.Item
@@ -60,7 +93,7 @@ export const Add: React.FC<{}> = () => {
             name="type"
             rules={[{ required: true, message: 'Please select your type!' }]}
           >
-            <Select onChange={onTypeChange} defaultValue="PASTE">
+            <Select defaultValue="PASTE">
               <Select.Option value="PASTE">Paste</Select.Option>
               <Select.Option value="SEARCH">Search</Select.Option>
             </Select>
@@ -71,16 +104,14 @@ export const Add: React.FC<{}> = () => {
             name="value"
             rules={[{ required: true, message: 'Please input your value!' }]}
           >
-            <Input.TextArea onChange={onValueChange} />
+            <Input.TextArea />
           </Form.Item>
-        </Form>
 
-        <Button className="add-button" onClick={onAddTool}>
-          Add tool
-        </Button>
+          <Button className="add-button" htmlType="submit">
+            Add tool
+          </Button>
+        </Form>
       </header>
     </div>
   );
 };
-
-export default Add;
