@@ -18,6 +18,27 @@ export const insertTextAtCursor = (text) => {
     range.text = text;
     range.select();
   } else {
-    console.log('Sorry. I cannot paste in elements other than inputs/textAreas =(');
+    console.log(
+      'Sorry. I cannot paste in elements other than inputs/textAreas =('
+    );
   }
-}
+};
+
+export const showConfetti = () => {
+  var el = document.activeElement.parentElement;
+
+  for (let index = 0; index < 50; index++) {
+    let confetti = document.createElement('I');
+    el.appendChild(confetti);
+  }
+
+  el.classList += ' confetti';
+
+  setTimeout(() => {
+    el.className = el.className.replace(' confetti', '');
+    const confettiList = el.querySelectorAll('i');
+    for (let index = 0; index < confettiList.length; index++) {
+      el.removeChild(confettiList[index]);
+    }
+  }, 2000);
+};

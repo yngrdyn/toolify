@@ -85,18 +85,24 @@ h4 {
 }
 
 .ant-collapse > .ant-collapse-item {
-  border: 1px solid white;
+  border: none;
+  margin-bottom: 10px;
 }
 
 .ant-collapse-content {
   color: rgb(255, 255, 255);
-  background-color: transparent;
+  background-color: #17212b;
   border: none;
+  border-radius: 10px;
+  margin-top: -5px;
 }
 
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
   color: white;
   text-align: left;
+  border: 1px solid white;
+  border-radius: 10px !important;
+  background: #2a3645;
 }
 
 .action > div > span {
