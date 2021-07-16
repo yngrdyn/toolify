@@ -40,7 +40,7 @@ export const ExportImport: React.FC<{}> = () => {
         >
           <Form.Item
             label="Paste configuration to Import"
-            name="value"
+            name="exportValue"
             rules={[{ required: true, message: 'Please input your configuration!' }]}
           >
             <Input.TextArea onChange={onValueChange} />

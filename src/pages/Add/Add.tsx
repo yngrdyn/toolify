@@ -37,6 +37,7 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
     );
   };
 
+<<<<<<< HEAD
   const onAddTool = (formValues: any) => {
     if (isNewToolValid(formValues)) {
       chrome.runtime.sendMessage({
@@ -55,6 +56,10 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
 
       initializeForm();
     }
+=======
+  const onValueChange = (e: { target: { value: string } }) => {
+    //state.value = e.target.value;
+>>>>>>> 2565810 (feat: changed styles)
   };
 
   const validateName = (
@@ -93,7 +98,11 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
             name="type"
             rules={[{ required: true, message: 'Please select your type!' }]}
           >
+<<<<<<< HEAD
             <Select defaultValue="PASTE">
+=======
+            <Select onChange={onTypeChange} value="PASTE">
+>>>>>>> 2565810 (feat: changed styles)
               <Select.Option value="PASTE">Paste</Select.Option>
               <Select.Option value="SEARCH">Search</Select.Option>
             </Select>
