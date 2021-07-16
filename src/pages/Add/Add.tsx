@@ -62,6 +62,7 @@ export const Add: React.FC<{}> = () => {
           >
             <Select onChange={onTypeChange} defaultValue="PASTE">
               <Select.Option value="PASTE">Paste</Select.Option>
+              <Select.Option value="SEARCH">Search</Select.Option>
             </Select>
           </Form.Item>
 
