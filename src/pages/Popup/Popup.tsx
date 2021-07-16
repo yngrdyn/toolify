@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from '../../assets/img/logo.svg';
 import './Popup.css';
-import { ActionType, MessageType, Tool, ToolTypes } from '../../core/types';
+import { ActionType, MessageType, Tool } from '../../core/types';
 import { Button, Collapse, Switch, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { Add } from '../Add/Add';
-
+import './Popup.css';
 const { Panel } = Collapse;
 
 const Popup: React.FC<{}> = () => {
@@ -52,7 +51,6 @@ const Popup: React.FC<{}> = () => {
     chrome.runtime.sendMessage({ type: ActionType.TOOLS_STATUS });
 
     chrome.runtime.onMessage.addListener((message: MessageType) => {
-      console.log(message);
       switch (message.type) {
         case ActionType.TOOLS:
           setTools(message.tools);
@@ -92,12 +90,17 @@ const Popup: React.FC<{}> = () => {
         <Collapse defaultActiveKey={['tools']}>
           <Panel header="Current Tools" key="tools">
             <div className="action-list">
-              {tools.map((tool) => (
-                <Tool data={tool}></Tool>
-              ))}
-              {tools.length == 0 && (
-                <p>There's no tools! Start by creating a new one</p>
-              )}
+              {
+                tools.map(
+                  tool => <Tool data={tool}></Tool>
+                )
+              }
+              {tools.length == 0 &&
+                <div className='no-tools'>
+                  <p>There are no tools 🥺!</p>
+                  <p>Start by creating a new one <span>😎</span></p>
+                </div>
+              }
             </div>
           </Panel>
           <Panel header="Add new tool" key="add">

@@ -1,20 +1,17 @@
 import { ActionType, MessageType, Tool } from '../../core/types';
+import { addToolToMenu } from './menu';
+import { sendToolsStatus, setTools } from './tools';
+import { initialize } from './utils';
 
-const setTools = (newTools: Tool[]) => {
-  chrome.storage.local.set({ tools: newTools });
-  tools = newTools;
-  sendToolsStatus(newTools);
-};
-
-const sendToolsStatus = (tools: Tool[]) => {
-  chrome.runtime.sendMessage({ type: ActionType.TOOLS, tools });
-};
-
+initialize();
 let tools: Tool[] = [];
 
 // Get locally stored value
 chrome.storage.local.get('tools', (res) => {
   tools = res['tools'] ?? [];
+  tools.forEach((tool: Tool) => {
+    addToolToMenu(tool);
+  });
 });
 
 chrome.runtime.onMessage.addListener((message: MessageType) => {
@@ -24,10 +21,11 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
       break;
     case ActionType.ADD_TOOL:
       const newTools = [...tools, message.tool];
-      setTools(newTools);
+      tools = setTools(newTools);
+      addToolToMenu(message.tool);
       break;
     case ActionType.DELETE_TOOL:
-      setTools(tools.filter((tool) => tool.id !== message.id));
+      tools = setTools(tools.filter((tool) => tool.id !== message.id));
       break;
     case ActionType.CHANGE_STATUS:
       const newChangedTools = tools.map((tool) =>
@@ -36,36 +34,14 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
               ...tool,
               enabled: message.enabled,
             }
-          : tool,
+          : tool
       );
-      setTools(newChangedTools);
+      tools = setTools(newChangedTools);
       break;
     case ActionType.CLEAR:
-      setTools([]);
+      tools = setTools([]);
       break;
     default:
       break;
   }
-});
-
-// PoC of Right menu context
-const searchWiki = (query: any) => {
-  query = query.selectionText;
-  chrome.tabs.create({
-    url:
-      'https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+%22' +
-      query +
-      '%22&queryString=' +
-      query,
-  });
-};
-
-chrome.contextMenus.create({
-  id: '1',
-  title: 'Search in Dynatrace Wiki',
-  contexts: ['selection'],
-});
-
-chrome.contextMenus.onClicked.addListener((info) => {
-  searchWiki(info);
 });
