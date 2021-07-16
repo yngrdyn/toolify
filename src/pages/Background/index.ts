@@ -5,10 +5,13 @@ import { initialize } from './utils';
 
 initialize();
 let tools: Tool[] = [];
+let ready = false;
 
 // Get locally stored value
 chrome.storage.local.get('tools', (res) => {
   tools = res['tools'] ?? [];
+  ready = true;
+  sendToolsStatus(tools);
   tools.forEach((tool: Tool) => {
     addToolToMenu(tool);
   });
@@ -17,7 +20,7 @@ chrome.storage.local.get('tools', (res) => {
 chrome.runtime.onMessage.addListener((message: MessageType) => {
   switch (message.type) {
     case ActionType.TOOLS_STATUS:
-      sendToolsStatus(tools);
+      if (ready) sendToolsStatus(tools);
       break;
     case ActionType.ADD_TOOL:
       const newTools = [...tools, message.tool];
