@@ -23,12 +23,18 @@ interface ToolChangeStatus {
   enabled: boolean;
 }
 
+interface ImportTools {
+  type: ActionType.IMPORT_TOOLS;
+  tools: Tool[];
+}
+
 export type MessageType =
   | ToolStatusRequest
   | ToolsStatus
   | ToolActions
   | ToolDeletion
-  | ToolChangeStatus;
+  | ToolChangeStatus
+  | ImportTools;
 
 export enum ActionType {
   TOOLS_STATUS = 'TOOLS_STATUS',
@@ -37,6 +43,7 @@ export enum ActionType {
   DELETE_TOOL = 'DELETE_TOOL',
   CHANGE_STATUS = 'CHANGE_STATUS',
   CLEAR = 'CLEAR',
+  IMPORT_TOOLS = 'IMPORT_TOOLS',
 }
 
 export enum ToolTypes {

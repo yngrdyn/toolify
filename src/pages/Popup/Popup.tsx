@@ -5,6 +5,7 @@ import { Button, Collapse, Switch, Tooltip } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { Add } from '../Add/Add';
 import './Popup.css';
+import { ExportImport } from '../Export-Import/Export-import';
 const { Panel } = Collapse;
 
 const Popup: React.FC<{}> = () => {
@@ -105,6 +106,9 @@ const Popup: React.FC<{}> = () => {
           </Panel>
           <Panel header="Add new tool" key="add">
             <Add tools={tools} />
+          </Panel>
+          <Panel header="Export/Import configuration" key="export">
+            <ExportImport />
           </Panel>
         </Collapse>
       </header>

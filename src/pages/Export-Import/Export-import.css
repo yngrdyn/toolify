@@ -1,0 +1,88 @@
+@import "~antd/dist/antd.css";
+
+.App-add {
+  position: relative;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  background-color: #282c34;
+}
+
+.App-logo {
+  height: 30vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.ant-form-item-label > label {
+  color: white;
+  font-size: 16px;
+}
+
+.App-header {
+  height: 100%;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.action {
+  margin-bottom: 10px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.action span {
+  margin-left: 10px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: white;
+}
+
+.add-button {
+  position: relative;
+  bottom: 5%;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+
+.title {
+  margin-top: 5%;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
