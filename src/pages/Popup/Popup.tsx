@@ -90,21 +90,21 @@ const Popup: React.FC<{}> = () => {
         <Collapse defaultActiveKey={['tools']}>
           <Panel header="Current Tools" key="tools">
             <div className="action-list">
-              {
-                tools.map(
-                  tool => <Tool data={tool} key={tool.id}></Tool>
-                )
-              }
-              {tools.length == 0 &&
-                <div className='no-tools'>
+              {tools.map((tool) => (
+                <Tool data={tool} key={tool.id}></Tool>
+              ))}
+              {tools.length == 0 && (
+                <div className="no-tools">
                   <p>There are no tools 🥺!</p>
-                  <p>Start by creating a new one <span>😎</span></p>
+                  <p>
+                    Start by creating a new one <span>😎</span>
+                  </p>
                 </div>
-              }
+              )}
             </div>
           </Panel>
           <Panel header="Add new tool" key="add">
-            <Add />
+            <Add tools={tools} />
           </Panel>
         </Collapse>
       </header>
