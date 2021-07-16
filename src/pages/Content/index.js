@@ -1,7 +1,8 @@
 import { insertTextAtCursor } from './modules/insertText';
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('llega el mensaje de paste');
   if (request.data) {
-      insertTextAtCursor(request.data);
+    insertTextAtCursor(request.data);
   }
 });

@@ -62,29 +62,6 @@ const Popup: React.FC<{}> = () => {
     });
   }, []);
 
-  const onClear = () => {
-    chrome.runtime.sendMessage({ type: ActionType.CLEAR });
-  };
-
-  const onAddTool = () => {
-    const popupOptions = {
-      width: 400,
-      height: 600,
-      left: screen.width / 2 - 400 / 2,
-      top: screen.height / 2 - 600 / 2,
-    };
-    onClear();
-    chrome.windows.create({
-      url: 'add.html',
-      type: 'popup',
-      width: popupOptions.width,
-      height: popupOptions.height,
-      left: popupOptions.left,
-      top: popupOptions.top,
-    });
-    //chrome.runtime.sendMessage({ type: ActionType.ADD_TOOL, tool: { name: Math.random().toString(), enabled: true, value: "asdasdd", type: ToolTypes.PASTE } });
-  };
-
   return (
     <div className="App">
       <header className="App-header">
