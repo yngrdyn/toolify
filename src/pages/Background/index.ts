@@ -1,9 +1,15 @@
-import { ActionType, MessageType, Tool } from '../../core/types';
+import { ActionType, MessageType, Tool, ToolTypes } from '../../core/types';
 import { addToolToMenu } from './menu';
 import { sendToolsStatus, setTools } from './tools';
-import { initialize } from './utils';
 
-initialize();
+const defaultTool: Tool = {
+  enabled: true,
+  id: '1',
+  name: 'Search in Dynatrace Wiki',
+  type: ToolTypes.SEARCH,
+  value: 'https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+',
+};
+
 let tools: Tool[] = [];
 let ready = false;
 
@@ -12,7 +18,7 @@ chrome.storage.local.get('tools', (res) => {
   tools = res['tools'] ?? [];
   ready = true;
   sendToolsStatus(tools);
-  tools.forEach((tool: Tool) => {
+  [defaultTool, ...tools].forEach((tool: Tool) => {
     addToolToMenu(tool);
   });
 });

@@ -14,12 +14,12 @@ interface ToolActions {
 
 interface ToolDeletion {
   type: ActionType.DELETE_TOOL;
-  id: number;
+  id: string;
 }
 
 interface ToolChangeStatus {
   type: ActionType.CHANGE_STATUS;
-  id: number;
+  id: string;
   enabled: boolean;
 }
 
@@ -41,10 +41,11 @@ export enum ActionType {
 
 export enum ToolTypes {
   PASTE = 'PASTE',
+  SEARCH = 'SEARCH',
 }
 
 export interface Tool {
-  id: number;
+  id: string;
   name: string;
   value: string;
   type: ToolTypes;

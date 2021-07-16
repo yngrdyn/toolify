@@ -6,13 +6,9 @@ export const paste = (
   chrome.tabs.sendMessage(tab?.id ?? 0, { data: content });
 };
 
-export const searchWiki = (query: any) => {
+export const searchWiki = (url: string, query: any) => {
   query = query.selectionText;
   chrome.tabs.create({
-    url:
-      'https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+%22' +
-      query +
-      '%22&queryString=' +
-      query,
+    url: `${url}${query}`,
   });
 };
