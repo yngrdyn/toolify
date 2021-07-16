@@ -92,7 +92,7 @@ const Popup: React.FC<{}> = () => {
             <div className="action-list">
               {
                 tools.map(
-                  tool => <Tool data={tool}></Tool>
+                  tool => <Tool data={tool} key={tool.id}></Tool>
                 )
               }
               {tools.length == 0 &&
