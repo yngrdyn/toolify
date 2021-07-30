@@ -70,6 +70,11 @@ h4 {
   color: #61dafb;
 }
 
+.app-title {
+  font-family: 'Merienda';
+  font-size: 20px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
