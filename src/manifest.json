@@ -38,9 +38,10 @@
     }
   ],
   "permissions": [
-    "storage",
+    "storage",  
     "contextMenus",
     "tabs",
+    "activeTab",
     "clipboardRead",
     "clipboardWrite"
   ]

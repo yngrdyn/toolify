@@ -56,6 +56,10 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
       initializeForm();
     }
   };
+  
+  const onValueChange = (e: { target: { value: string } }) => {
+    //state.value = e.target.value;
+  };
 
   const validateName = (
     rule: any,
@@ -93,7 +97,7 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
             name="type"
             rules={[{ required: true, message: 'Please select your type!' }]}
           >
-            <Select defaultValue="PASTE">
+            <Select value="PASTE">
               <Select.Option value="PASTE">Paste</Select.Option>
               <Select.Option value="SEARCH">Search</Select.Option>
             </Select>

@@ -50,6 +50,9 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
     case ActionType.CLEAR:
       tools = setTools([]);
       break;
+    case ActionType.IMPORT_TOOLS:
+      setTools(tools.concat(message.tools));
+      break;
     default:
       break;
   }
