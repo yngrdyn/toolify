@@ -33,6 +33,13 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
       tools = setTools(newTools);
       addToolToMenu(message.tool);
       break;
+    case ActionType.EDIT_TOOL:
+      tools = setTools(
+        tools.map((tool) =>
+          tool.id !== message.tool.id ? tool : { ...message.tool },
+        ),
+      );
+      break;
     case ActionType.DELETE_TOOL:
       tools = setTools(tools.filter((tool) => tool.id !== message.id));
       break;
@@ -43,7 +50,7 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
               ...tool,
               enabled: message.enabled,
             }
-          : tool
+          : tool,
       );
       tools = setTools(newChangedTools);
       break;

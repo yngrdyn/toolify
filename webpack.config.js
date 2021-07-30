@@ -126,7 +126,7 @@ var options = {
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
-              })
+              }),
             );
           },
         },
@@ -150,15 +150,15 @@ var options = {
         },
       ],
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/assets/fonts/Merienda-Bold.ttf',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },
-      ],
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     {
+    //       from: 'src/assets/fonts/Merienda-Bold.ttf',
+    //       to: path.join(__dirname, 'build'),
+    //       force: true,
+    //     },
+    //   ],
+    // }),
     new CopyWebpackPlugin({
       patterns: [
         {

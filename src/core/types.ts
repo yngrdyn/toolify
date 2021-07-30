@@ -12,6 +12,11 @@ interface ToolActions {
   tool: Tool;
 }
 
+interface TooleEdition {
+  type: ActionType.EDIT_TOOL;
+  tool: Tool;
+}
+
 interface ToolDeletion {
   type: ActionType.DELETE_TOOL;
   id: string;
@@ -32,6 +37,7 @@ export type MessageType =
   | ToolStatusRequest
   | ToolsStatus
   | ToolActions
+  | TooleEdition
   | ToolDeletion
   | ToolChangeStatus
   | ImportTools;
@@ -40,6 +46,7 @@ export enum ActionType {
   TOOLS_STATUS = 'TOOLS_STATUS',
   TOOLS = 'TOOLS',
   ADD_TOOL = 'ADD_TOOL',
+  EDIT_TOOL = 'EDIT_TOOL',
   DELETE_TOOL = 'DELETE_TOOL',
   CHANGE_STATUS = 'CHANGE_STATUS',
   CLEAR = 'CLEAR',

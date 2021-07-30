@@ -10,23 +10,27 @@ import './Add.css';
 export const Add /*: React.FC<{}> */ = (props: any) => {
   const [form] = Form.useForm();
 
-  const initializeForm = () => {
+  const initializeForm = (toolInEdition: Tool | undefined = undefined) => {
     form.setFieldsValue({
-      name: '',
-      type: 'PASTE',
-      value: '',
+      name: toolInEdition?.name ?? '',
+      type: toolInEdition?.type ?? 'PASTE',
+      value: toolInEdition?.value ?? '',
     });
   };
 
   console.log('add tools -> ', props.tools);
+  console.log('toolInEdition -> ', props.toolInEdition);
 
-  initializeForm();
+  initializeForm(props.toolInEdition);
 
   const isThereAnyToolWithSameName = (name: string) => {
-    return props.tools.some(
-      (tool: Tool) =>
-        tool.name.trim().toLocaleLowerCase() == name.trim().toLocaleLowerCase(),
-    );
+    return Boolean(props.toolInEdition)
+      ? false
+      : props.tools.some(
+          (tool: Tool) =>
+            tool.name.trim().toLocaleLowerCase() ==
+            name.trim().toLocaleLowerCase(),
+        );
   };
 
   const isNewToolValid = (formValues: any) => {
@@ -37,28 +41,44 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
     );
   };
 
-  const onAddTool = (formValues: any) => {
+  const onCancelHandler = (): void => {
+    form.resetFields();
+    props.onUpdateTool();
+  };
+
+  const onSubmit = (formValues: any) => {
     if (isNewToolValid(formValues)) {
-      chrome.runtime.sendMessage({
-        type: ActionType.ADD_TOOL,
-        tool: {
-          id: uuidv4(),
-          name: formValues.name,
-          type: formValues.type as valueType,
-          value: formValues.value,
-          enabled: true,
-        },
-      });
+      if (props.toolInEdition) {
+        chrome.runtime.sendMessage({
+          type: ActionType.EDIT_TOOL,
+          tool: {
+            id: props.toolInEdition.id,
+            name: formValues.name,
+            type: formValues.type as valueType,
+            value: formValues.value,
+            enabled: props.toolInEdition.enabled,
+          },
+        });
+        props.onUpdateTool();
+      } else {
+        chrome.runtime.sendMessage({
+          type: ActionType.ADD_TOOL,
+          tool: {
+            id: uuidv4(),
+            name: formValues.name,
+            type: formValues.type as valueType,
+            value: formValues.value,
+            enabled: true,
+          },
+        });
+      }
+
       chrome.windows.getLastFocused((window) => {
         window.focused = true;
       });
 
       initializeForm();
     }
-  };
-  
-  const onValueChange = (e: { target: { value: string } }) => {
-    //state.value = e.target.value;
   };
 
   const validateName = (
@@ -79,7 +99,7 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
           form={form}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          onFinish={onAddTool}
+          onFinish={onSubmit}
         >
           <Form.Item
             label="Tool label"
@@ -111,8 +131,18 @@ export const Add /*: React.FC<{}> */ = (props: any) => {
             <Input.TextArea />
           </Form.Item>
 
-          <Button className="add-button" htmlType="submit">
-            Add tool
+          {props.toolInEdition && (
+            <Button
+              type="default"
+              className="cancel-button"
+              htmlType="button"
+              onClick={onCancelHandler}
+            >
+              Cancel
+            </Button>
+          )}
+          <Button type="primary" className="add-button" htmlType="submit">
+            {props.toolInEdition ? 'Update' : 'Add tool'}
           </Button>
         </Form>
       </header>
