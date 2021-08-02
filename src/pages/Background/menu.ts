@@ -1,5 +1,10 @@
 import { Tool, ToolTypes } from '../../core/types';
 import { paste, searchWiki } from './actions';
+import { getToolById } from './utils';
+
+export const clearTools = () => {
+  chrome.contextMenus.removeAll();
+};
 
 export const addToolToMenu = (tool: Tool) => {
   chrome.contextMenus.create({
@@ -7,20 +12,14 @@ export const addToolToMenu = (tool: Tool) => {
     title: `${tool.name}`,
     contexts: tool.type === ToolTypes.PASTE ? ['editable'] : ['selection'],
   });
-  chrome.contextMenus.onClicked.addListener(
-    (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) => {
-      if (info.menuItemId === tool.id) {
-        getAction(tool, info, tab);
-      }
-    }
-  );
 };
 
-const getAction = (
-  tool: Tool,
+export const getAction = (
+  toolId: string,
   info: chrome.contextMenus.OnClickData,
   tab?: chrome.tabs.Tab
 ) => {
+  const tool = getToolById(toolId) as Tool;
   switch (tool.type) {
     case ToolTypes.PASTE:
       paste(info, tool.value, tab);

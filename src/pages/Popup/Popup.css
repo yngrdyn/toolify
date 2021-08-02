@@ -71,7 +71,6 @@ h4 {
 }
 
 .app-title {
-  font-family: 'Merienda';
   font-size: 20px;
 }
 
@@ -131,4 +130,10 @@ h4 {
 
 .no-tools > p:nth-child(2) > span {
   font-style: normal;
+}
+
+.warning-message {
+  margin-top: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }

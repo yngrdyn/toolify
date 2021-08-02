@@ -28,13 +28,19 @@ interface ImportTools {
   tools: Tool[];
 }
 
+interface Warning {
+  type: ActionType.WARNING;
+  message: string;
+}
+
 export type MessageType =
   | ToolStatusRequest
   | ToolsStatus
   | ToolActions
   | ToolDeletion
   | ToolChangeStatus
-  | ImportTools;
+  | ImportTools
+  | Warning;
 
 export enum ActionType {
   TOOLS_STATUS = 'TOOLS_STATUS',
@@ -44,6 +50,7 @@ export enum ActionType {
   CHANGE_STATUS = 'CHANGE_STATUS',
   CLEAR = 'CLEAR',
   IMPORT_TOOLS = 'IMPORT_TOOLS',
+  WARNING = 'WARNING',
 }
 
 export enum ToolTypes {
