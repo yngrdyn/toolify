@@ -1,27 +1,22 @@
 import { ActionType, MessageType, Tool, ToolTypes } from '../../core/types';
-import { addToolToMenu } from './menu';
+import { addToolToMenu, clearTools, getAction } from './menu';
 import { sendToolsStatus, setTools } from './tools';
-
-const defaultTool: Tool = {
-  enabled: true,
-  id: '1',
-  name: 'Search in Dynatrace Wiki',
-  type: ToolTypes.SEARCH,
-  value: 'https://dev-wiki.dynatrace.org/dosearchsite.action?cql=siteSearch+~+',
-};
+import { loadToolsFromStorage, showWarning } from './utils';
 
 let tools: Tool[] = [];
 let ready = false;
 
-// Get locally stored value
-chrome.storage.local.get('tools', (res) => {
-  tools = res['tools'] ?? [];
+loadToolsFromStorage().then((newTools) => {
   ready = true;
-  sendToolsStatus(tools);
-  [defaultTool, ...tools].forEach((tool: Tool) => {
-    addToolToMenu(tool);
-  });
+  tools = newTools;
 });
+
+chrome.contextMenus.onClicked.addListener(
+  (info: chrome.contextMenus.OnClickData, tab?: chrome.tabs.Tab) => {
+    console.log('context menu clicked');
+    getAction(info.menuItemId, info, tab);
+  }
+);
 
 chrome.runtime.onMessage.addListener((message: MessageType) => {
   switch (message.type) {
@@ -32,9 +27,13 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
       const newTools = [...tools, message.tool];
       tools = setTools(newTools);
       addToolToMenu(message.tool);
+      loadToolsFromStorage();
+      showWarning();
       break;
     case ActionType.DELETE_TOOL:
       tools = setTools(tools.filter((tool) => tool.id !== message.id));
+      loadToolsFromStorage();
+      showWarning();
       break;
     case ActionType.CHANGE_STATUS:
       const newChangedTools = tools.map((tool) =>
@@ -51,7 +50,9 @@ chrome.runtime.onMessage.addListener((message: MessageType) => {
       tools = setTools([]);
       break;
     case ActionType.IMPORT_TOOLS:
-      setTools(tools.concat(message.tools));
+      tools = setTools(tools.concat(message.tools));
+      loadToolsFromStorage();
+      showWarning();
       break;
     default:
       break;
